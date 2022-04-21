@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #playfield {
+            border: solid;
+            width: 1000px;
+            height: 500px;
+            padding: 10px;
+            position: relative;
+            background-image: url(./1627504568_13-kartinkin-com-p-klumba-tekstura-krasivo-17.jpg);
+        }
+
+        #Butterfly {
+
+
+            height: 150px;
+            width: 210px;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+             background-image: url(./pngwing.com.png);
+             transition: 0.5s;
+
+            background-size: 90%;
+            background-repeat: no-repeat;
+            background-position: 50% 60%;
+            /* transform: rotate(30deg); */
+
+
+        }
+
+        #statistic {
+            margin-bottom: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="result_field">
+        <form action="">
+            result <input type="text" id="number" name="number">
+            <!-- n <input type="text" id="n_" name="date"> -->
+            <!-- a <input type="text" id="a_" name="date"> -->
+            <!-- y <input type="text" id="y" name="date"> -->
+        </form>
+    </div>
+
+    <div id="playfield">
+        <div id="Butterfly"></div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const but = document.getElementById("Butterfly");
+            const fild = document.getElementById("playfield");
+            let stat = document.getElementById("number");
+           
+            let dx = 300;
+            let dy = 200;
+
+            function newposition() {
+               
+
+               let ndx=(Math.random()*2*dx)-dx;
+               if (
+                    but.offsetLeft + ndx < 0 ||
+                    but.offsetLeft + ndx > fild.clientWidth-but.clientWidth
+                ) { ndx= ndx*-1;
+                }
+
+                let newx = but.offsetLeft + ndx;
+               
+                let ndy = (Math.random() * 2 * dy) - dy;
+
+                if (
+                    but.offsetTop + ndy < 0 ||
+                    but.offsetTop + ndy > fild.clientHeight-but.clientHeight
+                ) { ndy= ndy*-1;
+                }
+
+                let newy = but.offsetTop + ndy;
+                
+               
+                but.style.top = newy + "px";
+                but.style.left = newx + "px";
+            }
+            fild.addEventListener("mousemove", function () {
+                newposition()
+               
+            })
+
+            let count = 0;
+            but.addEventListener("click", function () {
+                count++;
+                stat.value = count;
+
+                newposition()
+            })
+
+        })
+
+    </script>
+</body>
+
+</html>
