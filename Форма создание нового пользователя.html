@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            font-family: arial;
+            color: #333;
+        }
+
+        h1 {
+            font-weight: normal;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        form {
+            width: 500px;
+            margin: 20px auto;
+        }
+
+        input {
+            display: block;
+            padding: 8px 16px;
+            font-size: 2em;
+            margin: 10px auto;
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 10px;
+            border: 3px solid #ccc;
+            outline: none !important;
+        }
+
+        input.valid{border-color: green}
+        input.invalid{border-color:red}
+
+
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <h1>Создание Нового Пользователя</h1>
+    <form>
+
+        <input type="text" name="username" placeholder="логин">
+        <p>
+            Логин должен содержать 5 - 12 символов</p>
+
+        <input type="text" name="email" placeholder="email">
+        <p>Укажите правильную форму Email'a, т.е. me@example.com</p>
+
+        <input type="password" name="password" placeholder="пароль">
+        <p>Пароль должен содержать буквы, цифры (@, _ и - тоже допускаются) и состоять из 8 - 20 символов</p>
+
+        <input type="text" name="telephone" placeholder="телефон">
+        <p>Телефон должен быть введен в правильном формате (11 цифр)</p>
+
+        <input type="text" name="slug" placeholder="ссылка профиля">
+        <p>Ссылка должна содержать только строчные буквы, номера и дефисы, а также состоять из 8 - 20 символов</p>
+
+    </form>
+
+    <script>
+        const inputs = document.querySelectorAll('input');
+        const patterns = {
+            telephone: /^\+([0-9]{10,15})/,
+            username: /^(?=[A-Za-z]){1}(\w+){5,}$/ ,
+            password: /^(?=.*[0-9])(?=.*[\W])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8,}$/,
+            slug: /^[a-z\d-]{8,20}$/,
+            email: /^([^!@"'`\/\\&|?^$\s]{2,})@([^!@"'`\/\\&|?^$\s\.]+\.)+([^!@"'`\/\\&|?^$\s\.0-9]+)$/
+        }
+
+        function validate(field, regex) {
+            if (regex.test(field.value)) {
+                field.className = "valid";
+            }
+            else {
+                field.className = "invalid";
+            }
+
+
+        }
+
+        inputs.forEach((input) => {
+            input.addEventListener('keyup', (e) => {
+                //  console.log(e.target.attributes.name.value);
+                validate(e.target, patterns[e.target.attributes.name.value]);
+            })
+        })
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>
