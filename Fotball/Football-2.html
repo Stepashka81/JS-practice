@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Football</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+       
+
+        #field {
+          background-image: url("./Soccer_Field_Football_Pitch_clip_art.svg");
+         background-size: cover;
+         background-position: 100%;
+                    
+            width: 1188px;
+            height: 744px;
+            position: relative;
+           
+
+
+        }
+
+
+        
+        #ball {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background: url(./ball.png);
+            background-size: 100%;
+            background-color: white;
+            position: absolute;
+            left: 568px;
+            top:344px;
+            transition: 1s all;
+        }
+    </style>
+
+
+</head>
+
+
+
+
+
+<body>
+
+    <div id="field">
+        <!-- <img src="./Soccer_Field_Football_Pitch_clip_art.svg" alt=""height =744px; width=1188px> -->
+        <div id="ball"> </div>
+    </div>
+
+    <script>
+
+        "use strict";
+        addEventListener("DOMContentLoaded", function () {
+
+           
+
+             const f=document.getElementById("field")
+            
+             f.addEventListener("click",function(event)
+
+           
+                {
+
+                let coordinates = this.getBoundingClientRect();
+
+
+                let ballcoordinates = {
+                    top: event.clientY - coordinates.top - f.clientTop - ball.clientHeight / 2,
+                    left: event.clientX - coordinates.left - f.clientLeft - ball.clientWidth / 2
+                };
+
+
+                if (ballcoordinates.top < 0) 
+                {ballcoordinates.top = 0;}
+
+
+                if (ballcoordinates.left < 0) {ballcoordinates.left = 0;}
+
+
+
+                if (ballcoordinates.left + ball.clientWidth > field.clientWidth) {
+                    ballcoordinates.left = field.clientWidth - ball.clientWidth;
+                }
+
+
+                if (ballcoordinates.top + ball.clientHeight > field.clientHeight) {
+                    ballcoordinates.top = field.clientHeight - ball.clientHeight;
+                }
+
+                ball.style.left = ballcoordinates.left + 'px';
+                ball.style.top = ballcoordinates.top + 'px';
+            
+        })
+        })
+    </script>
+
+
+
+
+</body>
+
+
+</html>
