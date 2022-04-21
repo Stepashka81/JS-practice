@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #playfield {
+            border: solid 1px;
+
+            width: 1000px;
+            height: 500px;
+            padding: 10px;
+            position: relative;
+            /* background-image: url(./1627504568_13-kartinkin-com-p-klumba-tekstura-krasivo-17.jpg);  */
+            background-color: aquamarine;
+        }
+
+        #Butterfly {
+            height: 100px;
+            width: 150px;
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            /* background-image: url(./pngwing.com.png); */
+            transition: 0.5s;
+            background-size: 90%;
+            background-repeat: no-repeat;
+            background-position: 50% 60%;
+            /* border: solid 1px; */
+
+        }
+
+        #result_field {
+            margin-bottom: 10px;
+        }
+
+        .picture {
+            width: 150px;
+            height: 100px;
+            display: inline-block;
+            margin-left: 5px;
+            margin-right: 5px;
+            /* border: solid 1px; */
+            background-position: 50% 50%;
+            background-size: contain;
+            background-repeat: no-repeat; 
+        }
+
+        input {
+            width: 170px;
+            border: solid 2px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="result_field">
+        <input type="text" id="score" name="score">
+        <div class="picture"> </div>
+        <div class="picture"> </div>
+        <div class="picture"> </div>
+        <div class="picture"> </div>
+    </div>
+
+    <div id="playfield">
+        <div id="Butterfly"></div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const data = new Array(
+                { image: "./pngwing.com.png", clicks: 0 },
+                { image: "./кувшинка.jpg", clicks: 0 },
+                { image: "./собачка.jpg", clicks: 0 },
+                { image: "./Цветок.jpg", clicks: 0 }
+            );
+
+            console.info(data);//контроль значения
+
+          
+            let activeElement=0; //обьявляем переменную для работы с счетчиком кликов   
+            const select_images = document.querySelectorAll("#result_field .picture");//обьявляем переменную для клика выбора рисунков
+            const but = document.querySelector("#Butterfly"); //обьявляем переменную для клика на перемещающемся обекте
+            const score = document.querySelector("#score");//обьявляем переменную для значений в поле Input
+            const fild = document.getElementById("playfield");//обьявляем переменную для события перемещения мышкой на игровом поле
+            let dx = 300; //ширина скачка рисунка
+            let dy = 200;// высота скачка рисунка
+
+            function newposition() {
+                let ndx = (Math.random() * 2 * dx) - dx;
+              //  ndx = Math.ceil(ndx);
+                if (
+                    but.offsetLeft + ndx < 0 ||
+                    but.offsetLeft + ndx > fild.clientWidth - but.clientWidth
+                ) {
+                    ndx = ndx * -1;
+                }
+
+                let newx = but.offsetLeft + ndx;
+
+                let ndy = (Math.random() * 2 * dy) - dy;
+                ndy = Math.ceil(ndy);
+
+                if (
+                    but.offsetTop + ndy < 0 ||
+                    but.offsetTop + ndy > fild.clientHeight - but.clientHeight
+                ) {
+                    ndy = ndy * -1;
+                }
+
+                let newy = but.offsetTop + ndy;
+
+
+                but.style.top = newy + "px";
+                but.style.left = newx + "px";
+            }
+            //________________________________________________________________________________  
+
+            fild.addEventListener("mousemove", function () {
+                newposition()
+
+            })
+
+            // ___________________________________________________________________________
+
+
+            but.addEventListener("click", function () {
+               
+                data[activeElement].clicks=data[activeElement].clicks+1; //Увеличиваем елемент clicks под номером = Active element массива data при каждом счелчке
+                  score.value=data[activeElement].clicks; //присваеваем данным в inpute значение поля click массива с данными
+
+                  console.info(data[activeElement].clicks);
+                newposition()
+            })
+
+            select_images.forEach(function (item,index,all) {
+                   item.style.backgroundImage="url('"+data[index].image+"')";
+                  
+                  
+                   item.addEventListener("click", function (e) {
+                    console.info(this,item,index);
+                    
+                    but.style.backgroundImage="url('"+data[index].image+"')";
+                    score.value=data[index].clicks;
+                    activeElement=index;
+                    }) 
+                })
+
+
+
+        })
+
+    </script>
+</body>
+
+</html>
